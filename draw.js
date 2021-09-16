@@ -1,4 +1,8 @@
-let finalResult;
+/* The code for the first Lucky Draw on xDaiPunks
+ * The draw array will be updated with public addresses from the google form
+ */
+
+const fs = require('fs');
 
 const numberOfDraws = 5;
 const numberOfContestants = 104;
@@ -12,13 +16,14 @@ const randomPunkArray = shuffleArray(xDaiPunkArray);
 
 const drawResult = randomArray.slice(0, numberOfDraws);
 
-finalResult = [];
-for(let i = 0, iCount = drawResult.length; i < iCount; i++) {
-    finalResult.push({index: drawResult[i], awardedPunk: randomPunkArray[i]});
+const finalResult = [];
+for (let i = 0, iCount = drawResult.length; i < iCount; i++) {
+  finalResult.push({ index: drawResult[i], awardedPunk: randomPunkArray[i] });
 }
 
 console.log('In xDaiPunk style, The winners are', finalResult);
-console.log('Done');
+fs.writeFileSync('finalResults.json', JSON.stringify(finalResult));
+console.log(fs.readFileSync('finalResults.json', 'utf8'));
 
 // Randomize array in-place using Durstenfeld shuffle algorithm
 function shuffleArray(array) {
